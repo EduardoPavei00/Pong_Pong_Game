@@ -123,7 +123,7 @@ class Ball:
 
 
 class Enemies:
-
+#
     __min_x: int
     __max_x: int
     width: int = 35

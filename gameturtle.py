@@ -4,7 +4,7 @@ import turtle as t
 
 
 class PaddleGame():
-
+#
     sc = t.Screen()
     active: bool
     # TODO maybe game has an end?
