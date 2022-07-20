@@ -145,6 +145,3 @@ class Enemy:
         self.hits -= 1
         if self.hits == 0:
             self.__pen.clear()
-
-    def draw(self):
-        self.__pen.setx(self.x)

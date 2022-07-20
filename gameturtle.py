@@ -32,8 +32,8 @@ class PaddleGame:
         self.paddle = Paddle(0, -200, -self.border.size / 2, self.border.size / 2)
         # self.enemies = Enemies(100,100)
 
-        self.position_x = [-150, -75, 0, 75, 150, -150 , -75, 0, 75, 150]
-        self.position_y = [100, 100, 100, 100, 100, 200, 200, 200, 200, 200]
+        self.position_x = [-150, -75, 0, 75, 150, -150, -75, 0, 75, 150]
+        self.position_y = [150, 150, 150, 150, 150, 200, 200, 200, 200, 200]
         self.enemies = create_enemies(self.position_x, self.position_y)
 
         # Create Ball
@@ -84,7 +84,7 @@ class PaddleGame:
         ball_x_min = self.ball.x() - self.ball.radius * 10
         ball_x_max = self.ball.x() + self.ball.radius * 10
         ball_y_min = self.ball.y() - self.ball.radius * 10
-        ball_y_max = self.ball.y() + self.ball.radius * 10
+        ball_y_max = self.ball.y() + self.ball.radius * 1
 
         for e in self.enemies:
             enemies_x_min = e.x - (e.width / 2)
@@ -93,10 +93,9 @@ class PaddleGame:
             enemies_y_max = e.y + (e.height / 2)
             if ball_y_max <= enemies_y_min and (enemies_x_min <= ball_x_min <= enemies_x_max or enemies_x_min <= ball_x_max <= enemies_x_max):
                 self.ball.dy *= -1
+
             elif ball_y_min >= enemies_y_max and (enemies_x_min <= ball_x_min <= enemies_x_max or enemies_x_min <= ball_x_max <= enemies_x_max):
                 self.ball.dy *= -1
-
-
 
     def update(self):
         self.detect_enemies()
