@@ -1,3 +1,4 @@
+import random
 import turtle as t
 from turtle import TurtleScreen
 from enum import Enum
@@ -22,19 +23,6 @@ class ScreenBorder:
             self.__pen.forward(self.size)
             self.__pen.left(90)
 
-        self.__pen.hideturtle()
-
-
-class Lives:
-
-    def __init__(self):
-        self.lives = 3
-        self.__pen = t.Turtle()
-        self.__pen.speed(0)
-        self.__pen.penup()
-        self.__pen.goto(0, 240)
-        self.__pen.pendown()
-        self.__pen.write("Lives : {} ".format(self.lives), align="center", font=("Courier", 24, "normal"))
         self.__pen.hideturtle()
 
 
@@ -95,12 +83,14 @@ class Ball:
     """
     Ball of circle shape
     """
-
+    radius = 1
     def __init__(self, x_ini, y_ini, dx, dy):
         # TODO ball size
+
         self.__pen = t.Turtle()
         self.__pen.speed(3)
-        self.__pen.shape("circle")
+        self.__pen.shape('circle')
+        self.__pen.shapesize(self.radius)
         self.__pen.color("blue")
         self.__pen.penup()
         self.__pen.goto(x_ini, y_ini)
@@ -122,18 +112,24 @@ class Ball:
         return self.__pen.goto(0, 0)
 
 
-class Enemies:
-#
+class Enemy:
+    colors = ["yellow", "red", "green", "pink"]
     __min_x: int
     __max_x: int
-    width: int = 35
-    height: int = 15
+    width: int = 30
+    height: int = 10
+    hits = 1
 
     def __init__(self, start_x, start_y):
+        random_color = random.choice(self.colors)
+        self.x = start_x
+        self.y = start_y
+
         self.__pen = t.Turtle()
+        self.hits = self.hits
         self.__pen.speed(0)
         self.__pen.shape("square")
-        self.__pen.color("green")
+        self.__pen.color(random_color)
         self.__pen.shapesize(stretch_wid=self.height / 10, stretch_len=self.width / 10)
         self.__pen.penup()
         self.__pen.goto(start_x, start_y)
@@ -143,3 +139,12 @@ class Enemies:
 
     def y(self):
         return self.__pen.ycor()
+
+    def hit(self):
+        print("bateu")
+        self.hits -= 1
+        if self.hits == 0:
+            self.__pen.clear()
+
+    def draw(self):
+        self.__pen.setx(self.x)
