@@ -92,20 +92,26 @@ class Ball:
     """
     Ball of circle shape
     """
-    radius = 1
+    radius = 8
+
     def __init__(self, x_ini, y_ini, dx, dy):
         # TODO ball size
 
         self.__pen = t.Turtle()
         self.__pen.speed(3)
+        self.__pen.shapesize(1)
         self.__pen.shape('circle')
-        self.__pen.shapesize(self.radius)
+
         self.__pen.color("blue")
         self.__pen.penup()
         self.__pen.goto(x_ini, y_ini)
         # TODO E se eu quiser que a bola caminhasse em uma direcao diferente?
         self.dx = dx
         self.dy = dy
+
+    def clear(self):
+        print("teste")
+        self.__pen.hideturtle()
 
     def x(self):
         return self.__pen.xcor()
@@ -150,7 +156,8 @@ class Enemy:
         return self.__pen.ycor()
 
     def hit(self):
-        print("bateu")
         self.hits -= 1
         if self.hits == 0:
-            self.__pen.clear()
+            self.__pen.hideturtle()
+        else:
+            self.__pen.color("yellow")
