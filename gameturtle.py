@@ -101,7 +101,8 @@ class PaddleGame:
         self.detect_enemies()
         self.detect_ball_in_border()
         self.detect_ball_in_paddle()
-        self.ball.move()
+        self.ball.update_position()
+        self.paddle.update_position()
         self.sc.update()
 
     def start(self):

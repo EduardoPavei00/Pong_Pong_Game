@@ -27,6 +27,7 @@ class ScreenBorder:
 
 
 class PaddleDirection(Enum):
+    NONE = 0
     RIGHT = 1
     LEFT = 2
 
@@ -37,6 +38,7 @@ class Paddle:
     __dx: int = 10
     width: int = 50
     height: int = 10
+    __next_move = PaddleDirection.NONE
 
     def __init__(self, start_x, start_y, min_x, max_x):
         self.__min_x = min_x + self.width / 2
@@ -56,11 +58,13 @@ class Paddle:
     def y(self):
         return self.__pen.ycor()
 
-    def move(self, direction: PaddleDirection):
+    def __move(self, direction: PaddleDirection):
         if direction == PaddleDirection.RIGHT:
             positions = self.__dx
-        else:
+        elif direction == PaddleDirection.LEFT:
             positions = -self.__dx
+        else:
+            return
 
         def undo():
             self.__pen.setx(self.__pen.xcor() - positions)
@@ -73,10 +77,15 @@ class Paddle:
             undo()
 
     def paddle_right(self):
-        self.move(PaddleDirection.RIGHT)
+        self.__next_move = PaddleDirection.RIGHT
 
     def paddle_left(self):
-        self.move(PaddleDirection.LEFT)
+        self.__next_move = PaddleDirection.LEFT
+
+    def update_position(self):
+        self.__move(self.__next_move)
+        self.__next_move = PaddleDirection.NONE
+
 
 
 class Ball:
@@ -104,7 +113,7 @@ class Ball:
     def y(self):
         return self.__pen.ycor()
 
-    def move(self):
+    def update_position(self):
         self.__pen.setx(self.__pen.xcor() + self.dx)
         self.__pen.sety(self.__pen.ycor() + self.dy)
 
