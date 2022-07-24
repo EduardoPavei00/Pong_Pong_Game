@@ -43,8 +43,17 @@ class PaddleGame:
         self.sc.listen()
         self.sc.onkeypress(self.paddle.paddle_right, "Right")
         self.sc.onkeypress(self.paddle.paddle_left, "Left")
-        self.sc.onkeypress(self.ball.clear, "p")
+        # self.sc.onkeypress(self.draw_menu, "P")
 
+    def win(self):
+        if len(self.enemies) == 0:
+            self.sc.clearscreen()
+            self.__pen.speed(0)
+            self.__pen.penup()
+            self.__pen.goto(0, 0)
+            self.__pen.pendown()
+            self.__pen.write("win ", False, align="center", font=("Courier", 48, "normal"))
+            self.__pen.hideturtle()
 
     def draw(self):
         self.__pen = t.Turtle()
@@ -54,6 +63,16 @@ class PaddleGame:
         self.__pen.pendown()
         self.__pen.write("Lives : {} ".format(self.lives), align="center", font=("Courier", 24, "normal"))
         self.__pen.hideturtle()
+
+    def game_over(self):
+        self.sc.clearscreen()
+        self.__pen.speed(0)
+        self.__pen.penup()
+        self.__pen.goto(0, 0)
+        self.__pen.pendown()
+        self.__pen.write("Game Over ", False, align="center", font=("Courier", 48, "normal"))
+        self.__pen.hideturtle()
+        self.ball.clear()
 
     def detect_ball_in_border(self):
         ball_x_min = self.ball.x() - self.ball.radius
@@ -71,6 +90,8 @@ class PaddleGame:
             self.__pen.clear()
             self.__pen.write("Lives : {} ".format(self.lives), align="center", font=("Courier", 24, "normal"))
             self.ball.reset()
+            if self.lives <= 0:
+                self.game_over()
 
     def detect_ball_in_paddle(self):
 
@@ -114,9 +135,6 @@ class PaddleGame:
         self.__pen.shape("square")
         self.__pen.color("black")
         self.__pen.shapesize(stretch_wid=1000, stretch_len=1000)
-
-
-
 
     def update(self):
         self.detect_enemies()

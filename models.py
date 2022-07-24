@@ -87,7 +87,6 @@ class Paddle:
         self.__next_move = PaddleDirection.NONE
 
 
-
 class Ball:
     """
     Ball of circle shape
@@ -111,7 +110,7 @@ class Ball:
 
     def clear(self):
         print("teste")
-        self.__pen.hideturtle()
+        self.__pen.goto(10000, 10000)
 
     def x(self):
         return self.__pen.xcor()
