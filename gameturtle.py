@@ -37,7 +37,7 @@ class PaddleGame:
         self.enemies = create_enemies(self.position_x, self.position_y)
 
         # Create Ball
-        self.ball = Ball(0, 0, +1, +2)
+        self.ball = Ball(0, 0, +5, +6)
 
         # Keyboard bindings
         self.sc.listen()
@@ -142,8 +142,9 @@ class PaddleGame:
         self.detect_ball_in_paddle()
         self.ball.update_position()
         self.paddle.update_position()
-        # self.sc.update()
+        self.win()
 
+        # self.sc.update()
 
     def start(self):
         self.active = True
