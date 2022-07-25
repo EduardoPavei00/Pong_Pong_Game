@@ -132,15 +132,14 @@ class Enemy:
     __max_x: int
     width: int = 30
     height: int = 10
-    hits = 1
 
-    def __init__(self, start_x, start_y):
+    def __init__(self, start_x, start_y, hits):
         random_color = random.choice(self.colors)
         self.x = start_x
         self.y = start_y
 
         self.__pen = t.Turtle()
-        self.hits = self.hits
+        self.hits = hits
         self.__pen.speed(0)
         self.__pen.shape("square")
         self.__pen.color(random_color)
@@ -159,4 +158,4 @@ class Enemy:
         if self.hits == 0:
             self.__pen.hideturtle()
         else:
-            self.__pen.color("yellow")
+            self.__pen.color("Black")

@@ -4,10 +4,10 @@ import turtle as t
 import tkinter as Canvas
 
 
-def create_enemies(x_positions, y_positions):
+def create_enemies(x_positions, y_positions, hits):
     enemies = []
     for i in range(len(x_positions)):
-        x = Enemy(x_positions[i], y_positions[i])
+        x = Enemy(x_positions[i], y_positions[i],hits)
         enemies.append(x)
     return enemies
 
@@ -34,7 +34,7 @@ class PaddleGame:
 
         self.position_x = [-150, -75, 0, 75, 150, -150, -75, 0, 75, 150]
         self.position_y = [150, 150, 150, 150, 150, 200, 200, 200, 200, 200]
-        self.enemies = create_enemies(self.position_x, self.position_y)
+        self.enemies = create_enemies(self.position_x, self.position_y, 1)
 
         # Create Ball
         self.ball = Ball(0, 0, +5, +6)
@@ -52,7 +52,7 @@ class PaddleGame:
             self.__pen.penup()
             self.__pen.goto(0, 0)
             self.__pen.pendown()
-            self.__pen.write("win ", False, align="center", font=("Courier", 48, "normal"))
+            self.__pen.write(" You win!!! ", False, align="center", font=("Courier", 48, "normal"))
             self.__pen.hideturtle()
 
     def draw(self):
@@ -120,14 +120,22 @@ class PaddleGame:
 
             if ball_x_max + self.ball.dx > enemies_x_min and ball_x_min + self.ball.dx < enemies_x_max and ball_y_max > enemies_y_min and ball_y_min < enemies_y_max:
                 self.ball.dx *= -1
-                self.enemies.remove(e)
-                e.hit()
+
+                if e.hits >= 1:
+                    print(e.hits)
+                    e.hit()
+                else:
+                    self.enemies.remove(e)
+                    e.hit()
 
             if ball_x_max > enemies_x_min and ball_x_min < enemies_x_max and ball_y_max + self.ball.dy > enemies_y_min and ball_y_min + self.ball.dy < enemies_y_max:
                 self.ball.dy *= -1
-                self.enemies.remove(e)
-                e.hit()
-                # self.clear()
+                if e.hits >= 1:
+                    print(e.hits)
+                    e.hit()
+                else:
+                    self.enemies.remove(e)
+                    e.hit()
 
     def clear(self):
         self.__pen = t.Turtle()
