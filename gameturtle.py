@@ -1,4 +1,6 @@
 # Import required library
+import random
+
 from models import Paddle, ScreenBorder, Ball, Enemy
 import turtle as t
 from time import sleep
@@ -15,6 +17,7 @@ def create_enemies(x_positions, y_positions, hits):
 
 
 class PaddleGame:
+    rotate_ball = random.choice([1, -1])
     sc = t.Screen()
     active: bool
     level = 1
@@ -34,9 +37,21 @@ class PaddleGame:
         while True:
             self.sc.bgcolor('#fff2b7')
             self.__pen.penup()
-            self.__pen.goto(0, 0)
+            self.__pen.goto(0, 150)
             self.__pen.pendown()
             self.__pen.write("press P to start", False, align="center", font=("Courier", 48, "normal"))
+            self.__pen.penup()
+            self.__pen.goto(0, 100)
+            self.__pen.pendown()
+            self.__pen.write("try not to drop the ball:", False, align="center", font=("Courier", 35, "normal"))
+            self.__pen.penup()
+            self.__pen.goto(0, -50)
+            self.__pen.pendown()
+            self.__pen.write("How to play:", False, align="center", font=("Courier", 35, "normal"))
+            self.__pen.penup()
+            self.__pen.goto(0, -100)
+            self.__pen.pendown()
+            self.__pen.write("< and >", False, align="center", font=("Courier", 30, "normal"))
             self.__pen.hideturtle()
             if self.state is True:
                 self.sc.clearscreen()
@@ -56,7 +71,7 @@ class PaddleGame:
 
         # Create Ball
 
-        self.ball = Ball(0, 0, +3, -4)
+        self.ball = Ball(0, 0, (self.rotate_ball * 2), (self.rotate_ball * 3))
 
         # Keyboard bindings
         self.sc.listen()
@@ -85,7 +100,7 @@ class PaddleGame:
             self.enemies = create_enemies(self.position_x, self.position_y, 2)
 
             # Create Ball
-            self.ball = Ball(0, 0, +5, +6)
+            self.ball = Ball(0, 0, (self.rotate_ball * 5), (self.rotate_ball * 6))
 
             self.sc.listen()
             self.sc.onkeypress(self.paddle.paddle_right, "Right")
