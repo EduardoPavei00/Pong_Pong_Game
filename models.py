@@ -106,6 +106,7 @@ class Ball:
         self.__pen.fillcolor('#fff4a8')
         self.__pen.penup()
         self.__pen.goto(x_ini, y_ini)
+
         # TODO E se eu quiser que a bola caminhasse em uma direcao diferente?
         self.dx = dx
         self.dy = dy
@@ -125,11 +126,12 @@ class Ball:
         self.__pen.sety(self.__pen.ycor() + self.dy)
 
     def reset(self):
-        return self.__pen.goto(0, 0)
+        self.dx = -1 * self.dx
+        self.dy = -1 * self.dy
+        return self.__pen.goto(0, -120)
 
 
 class Enemy:
-
     __min_x: int
     __max_x: int
     width: int = 30

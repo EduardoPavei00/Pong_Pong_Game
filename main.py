@@ -1,5 +1,5 @@
-import menu
 from gameturtle import PaddleGame
+
 #
 game = PaddleGame()
 while True:
