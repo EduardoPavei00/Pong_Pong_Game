@@ -1,4 +1,3 @@
-import random
 import turtle as t
 from turtle import TurtleScreen
 from enum import Enum
@@ -19,9 +18,12 @@ class ScreenBorder:
         self.__pen.setposition(-self.size / 2, -self.size / 2)
         self.__pen.pendown()
         self.__pen.pensize(3)
+        self.__pen.fillcolor('#ffe690')
+        self.__pen.begin_fill()
         for side in range(4):
             self.__pen.forward(self.size)
             self.__pen.left(90)
+        self.__pen.end_fill()
 
         self.__pen.hideturtle()
 
@@ -47,7 +49,7 @@ class Paddle:
         self.__pen = t.Turtle()
         self.__pen.speed(0)
         self.__pen.shape("square")
-        self.__pen.color("black")
+        self.__pen.fillcolor('#f2b767')
         self.__pen.shapesize(stretch_wid=self.height / 10, stretch_len=self.width / 10)
         self.__pen.penup()
         self.__pen.goto(start_x, start_y)
@@ -97,11 +99,11 @@ class Ball:
         # TODO ball size
 
         self.__pen = t.Turtle()
-        self.__pen.speed(3)
+        self.__pen.speed(0)
         self.__pen.shapesize(1)
         self.__pen.shape('circle')
 
-        self.__pen.color("blue")
+        self.__pen.fillcolor('#fff4a8')
         self.__pen.penup()
         self.__pen.goto(x_ini, y_ini)
         # TODO E se eu quiser que a bola caminhasse em uma direcao diferente?
@@ -127,14 +129,13 @@ class Ball:
 
 
 class Enemy:
-    colors = ["yellow", "red", "green", "pink"]
+
     __min_x: int
     __max_x: int
     width: int = 30
     height: int = 10
 
     def __init__(self, start_x, start_y, hits):
-        random_color = random.choice(self.colors)
         self.x = start_x
         self.y = start_y
 
@@ -142,7 +143,7 @@ class Enemy:
         self.hits = hits
         self.__pen.speed(0)
         self.__pen.shape("square")
-        self.__pen.color(random_color)
+        self.__pen.fillcolor('#cb3401')
         self.__pen.shapesize(stretch_wid=self.height / 10, stretch_len=self.width / 10)
         self.__pen.penup()
         self.__pen.goto(start_x, start_y)
@@ -158,4 +159,4 @@ class Enemy:
         if self.hits == 0:
             self.__pen.hideturtle()
         else:
-            self.__pen.color("Black")
+            self.__pen.fillcolor('#358163')

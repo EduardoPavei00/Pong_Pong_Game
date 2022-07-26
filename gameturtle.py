@@ -1,13 +1,13 @@
 # Import required library
-from models import Paddle, ScreenBorder, Ball, PaddleDirection, Enemy, Enemy
+from models import Paddle, ScreenBorder, Ball, Enemy
 import turtle as t
-import tkinter as Canvas
+from time import sleep
 
 
 def create_enemies(x_positions, y_positions, hits):
     enemies = []
     for i in range(len(x_positions)):
-        x = Enemy(x_positions[i], y_positions[i],hits)
+        x = Enemy(x_positions[i], y_positions[i], hits)
         enemies.append(x)
     return enemies
 
@@ -19,9 +19,10 @@ class PaddleGame:
     # TODO maybe game has an end?
 
     def __init__(self):
+        self.__pen = t.Turtle()
         self.lives = 3
         self.sc.title("Pong game")
-        self.sc.bgcolor("white")
+        self.sc.bgcolor('#fff2b7')
         self.sc.setup(width=1000, height=600)
 
         # Create Border
@@ -34,26 +35,54 @@ class PaddleGame:
 
         self.position_x = [-150, -75, 0, 75, 150, -150, -75, 0, 75, 150]
         self.position_y = [150, 150, 150, 150, 150, 200, 200, 200, 200, 200]
-        self.enemies = create_enemies(self.position_x, self.position_y, 1)
+        self.enemies_1 = create_enemies(self.position_x, self.position_y, 1)
 
         # Create Ball
-        self.ball = Ball(0, 0, +5, +6)
+
+        self.ball = Ball(0, 0, +4, -5)
 
         # Keyboard bindings
         self.sc.listen()
         self.sc.onkeypress(self.paddle.paddle_right, "Right")
         self.sc.onkeypress(self.paddle.paddle_left, "Left")
-        # self.sc.onkeypress(self.draw_menu, "P")
 
-    def win(self):
-        if len(self.enemies) == 0:
+    def level_2(self):
+        if len(self.enemies_1) == 0:
+            self.sc.bgcolor('#fff2b7')
+            self.transition("Level 2")
+
             self.sc.clearscreen()
-            self.__pen.speed(0)
-            self.__pen.penup()
-            self.__pen.goto(0, 0)
-            self.__pen.pendown()
-            self.__pen.write(" You win!!! ", False, align="center", font=("Courier", 48, "normal"))
-            self.__pen.hideturtle()
+            self.border = ScreenBorder(self.sc)
+            self.sc.bgcolor('#fff2b7')
+            self.draw()
+            # Create Paddle
+            self.paddle = Paddle(0, -200, -self.border.size / 2, self.border.size / 2)
+            # self.enemies = Enemies(100,100)
+
+            self.position_x = [-150, -75, 0, 75, 150, -150, -75, 0, 75, 150]
+            self.position_y = [150, 150, 150, 150, 150, 200, 200, 200, 200, 200]
+            self.enemies_1 = create_enemies(self.position_x, self.position_y, 2)
+
+            # Create Ball
+            self.ball = Ball(0, 0, +5, +6)
+
+            self.sc.listen()
+            self.sc.onkeypress(self.paddle.paddle_right, "Right")
+            self.sc.onkeypress(self.paddle.paddle_left, "Left")
+            if len(self.enemies_1) == 0:
+                self.transition("you win!!")
+
+    ###
+
+    def transition(self, frase):
+        self.sc.clearscreen()
+        self.__pen.speed(0)
+        self.__pen.penup()
+        self.__pen.goto(0, 0)
+        self.__pen.pendown()
+        self.__pen.write(frase, False, align="center", font=("Courier", 48, "normal"))
+        self.__pen.hideturtle()
+        sleep(2)
 
     def draw(self):
         self.__pen = t.Turtle()
@@ -112,30 +141,36 @@ class PaddleGame:
         ball_y_min = self.ball.y() - self.ball.radius
         ball_y_max = self.ball.y() + self.ball.radius
 
-        for e in self.enemies:
-            enemies_x_min = e.x - (e.width/2)
-            enemies_x_max = e.x + (e.width/2)
-            enemies_y_min = e.y - (e.height/2)
-            enemies_y_max = e.y + (e.height/2)
+        for e in self.enemies_1:
+            enemies_x_min = e.x - e.width
+            enemies_x_max = e.x + e.width
+            enemies_y_min = e.y - e.height
+            enemies_y_max = e.y + e.height
 
-            if ball_x_max + self.ball.dx > enemies_x_min and ball_x_min + self.ball.dx < enemies_x_max and ball_y_max > enemies_y_min and ball_y_min < enemies_y_max:
+            if ball_x_max + self.ball.dx > enemies_x_min and ball_x_min + self.ball.dx < enemies_x_max \
+                    and ball_y_max > enemies_y_min and ball_y_min < enemies_y_max:
                 self.ball.dx *= -1
 
-                if e.hits >= 1:
+                if e.hits != 1:
                     print(e.hits)
                     e.hit()
                 else:
-                    self.enemies.remove(e)
+                    print('remove')
+                    self.enemies_1.remove(e)
                     e.hit()
 
-            if ball_x_max > enemies_x_min and ball_x_min < enemies_x_max and ball_y_max + self.ball.dy > enemies_y_min and ball_y_min + self.ball.dy < enemies_y_max:
+            if ball_x_max > enemies_x_min and ball_x_min < enemies_x_max and ball_y_max + self.ball.dy > enemies_y_min \
+                    and ball_y_min + self.ball.dy < enemies_y_max:
                 self.ball.dy *= -1
-                if e.hits >= 1:
+                if e.hits != 1:
                     print(e.hits)
                     e.hit()
                 else:
-                    self.enemies.remove(e)
+                    print('remove')
+                    self.enemies_1.remove(e)
                     e.hit()
+            if len(self.enemies_1) == 0:
+                self.level_2()
 
     def clear(self):
         self.__pen = t.Turtle()
@@ -150,7 +185,6 @@ class PaddleGame:
         self.detect_ball_in_paddle()
         self.ball.update_position()
         self.paddle.update_position()
-        self.win()
 
         # self.sc.update()
 
