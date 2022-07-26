@@ -3,7 +3,7 @@ from models import Paddle, ScreenBorder, Ball, Enemy
 import turtle as t
 from time import sleep
 
-from teste_turtle import fim
+from screen_win import fim
 
 
 def create_enemies(x_positions, y_positions, hits):
