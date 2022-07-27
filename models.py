@@ -1,3 +1,4 @@
+import random
 import turtle as t
 from turtle import TurtleScreen
 from enum import Enum
@@ -94,6 +95,7 @@ class Ball:
     Ball of circle shape
     """
     radius = 8
+    rotate_ball = random.choice([1, -1])
 
     def __init__(self, x_ini, y_ini, dx, dy):
         # TODO ball size
@@ -108,8 +110,8 @@ class Ball:
         self.__pen.goto(x_ini, y_ini)
 
         # TODO E se eu quiser que a bola caminhasse em uma direcao diferente?
-        self.dx = dx
-        self.dy = dy
+        self.dx = self.rotate_ball * dx
+        self.dy = self.rotate_ball * dy
 
     def clear(self):
         print("teste")
@@ -136,6 +138,7 @@ class Enemy:
     __max_x: int
     width: int = 30
     height: int = 10
+    color = '#d34e00'
 
     def __init__(self, start_x, start_y, hits):
         self.x = start_x
@@ -145,7 +148,7 @@ class Enemy:
         self.hits = hits
         self.__pen.speed(0)
         self.__pen.shape("square")
-        self.__pen.fillcolor('#cb3401')
+        self.__pen.fillcolor(self.color)
         self.__pen.shapesize(stretch_wid=self.height / 10, stretch_len=self.width / 10)
         self.__pen.penup()
         self.__pen.goto(start_x, start_y)
@@ -160,5 +163,7 @@ class Enemy:
         self.hits -= 1
         if self.hits == 0:
             self.__pen.hideturtle()
+        if self.hits == 2:
+            self.__pen.fillcolor('#f4a019')
         else:
-            self.__pen.fillcolor('#358163')
+            self.__pen.fillcolor('#ffea7f')
