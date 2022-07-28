@@ -75,7 +75,7 @@ class PaddleGame:
         self.sc.bye()
 
     def state_menu(self):
-        print("fechou menu")
+        print("close menu")
         self.state = True
 
     # ###
@@ -96,7 +96,6 @@ class PaddleGame:
         self.__pen.write(frase, False, align="center", font=("Courier", 48, "normal"))
         self.__pen.hideturtle()
         sleep(2)
-
 
     def clear(self):
         self.__pen = t.Turtle()
