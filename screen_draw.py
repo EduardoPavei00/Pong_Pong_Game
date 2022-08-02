@@ -1,13 +1,14 @@
-import turtle
+import turtle as t
 
 
-def fim():
-    sc = turtle.Screen()
+
+def end():
+    sc = t.Screen()
     sc.clearscreen()
     sc.bgcolor("#000")
     sc.title("You Win!")
     sc.screensize(500, 800)
-    firework = turtle.Turtle()
+    firework = t.Turtle()
     firework.pensize(3)
     firework.shape("turtle")
     firework.goto(0, 0)
@@ -50,7 +51,7 @@ def fim():
         firework.penup()
         firework.setpos(0, 0)
 
-    text = turtle.Turtle()
+    text = t.Turtle()
     text.penup()
     text.goto(0, 400)
     text.pendown()
@@ -63,3 +64,55 @@ def fim():
     text.write("Projeto no GitHub: EduardoPavei00 !!", True, align="center", font=("Monster", 12, "normal"))
 
     sc.mainloop()
+
+
+def game_over():
+    sc = t.Screen()
+    sc.clearscreen()
+    sc.bgcolor('#fff2b7')
+    sc.title("GAME OVER!!")
+    sc.screensize(500, 800)
+    __pen = t.Turtle()
+    __pen.pensize(10)
+    __pen.fillcolor('yellow')
+    __pen.hideturtle()
+    radius = 180
+    __pen.penup()
+    __pen.setposition(0, -radius)
+    __pen.setheading(0)
+    __pen.pendown()
+    __pen.begin_fill()
+    __pen.circle(radius)
+    __pen.end_fill()
+
+    mouth_radius = radius * 0.6
+    mouth_angle = 70
+    __pen.penup()
+    __pen.setposition(0, -20)
+    __pen.setheading(180)
+    __pen.pendown()
+    __pen.circle(mouth_radius, mouth_angle)
+    __pen.penup()
+    __pen.setposition(0, -20)
+    __pen.setheading(180)
+    __pen.pendown()
+    __pen.circle(mouth_radius, -mouth_angle)
+
+    eye_x = 50
+    eye_y = 50
+    eye_size = 60
+    __pen.penup()
+    __pen.setposition(eye_x, eye_y)
+    __pen.pendown()
+    __pen.dot(eye_size)
+    __pen.penup()
+    __pen.setposition(-eye_x, eye_y)
+    __pen.pendown()
+    __pen.dot(eye_size)
+
+    text = t.Turtle()
+    text.penup()
+    text.goto(0, 200)
+    text.pendown()
+    text.write("Game Over!!", False, align="center", font=("Courier", 48, "normal"))
+    text.color("#fff")

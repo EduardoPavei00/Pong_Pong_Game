@@ -2,7 +2,7 @@ import turtle as t
 
 import gameturtle
 from models import ScreenBorder, Paddle, Ball, Enemy
-from screen_win import fim
+from screen_draw import end, game_over
 
 
 def create_enemies(x_positions, y_positions, hits):
@@ -36,12 +36,14 @@ class Level:
         # self.position_y = [150, 150, 150, 150, 150, 200, 200, 200, 200, 200, 100, 100, 100, 100, 100]
         self.enemies = create_enemies(list_position_x, list_position_y, hits)
 
-        # Create Ball
         self.ball = Ball(0, 0, velocity_ball_x, velocity_ball_y)
+
 
         self.sc.listen()
         self.sc.onkeypress(self.paddle.paddle_right, "Right")
         self.sc.onkeypress(self.paddle.paddle_left, "Left")
+        self.sc.onkeypress(self.paddle.paddle_right, "d")
+        self.sc.onkeypress(self.paddle.paddle_left, "a")
 
     def draw(self):
         self.__pen = t.Turtle()
@@ -70,7 +72,7 @@ class Level:
             self.draw()
             self.ball.reset()
             if gameturtle.PaddleGame.lives <= 0:
-                fim()
+                game_over()
 
     def detect_ball_in_paddle(self):
 

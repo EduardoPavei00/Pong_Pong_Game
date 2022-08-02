@@ -163,7 +163,13 @@ class Enemy:
         self.hits -= 1
         if self.hits == 0:
             self.__pen.hideturtle()
+        if self.hits == 1:
+            self.__pen.fillcolor('#ffea7f')
         if self.hits == 2:
             self.__pen.fillcolor('#f4a019')
-        else:
-            self.__pen.fillcolor('#ffea7f')
+        if self.hits == 3:
+            self.__pen.fillcolor('#6B6B24')
+        if self.hits == 4:
+            self.__pen.fillcolor('#198fb3')
+        # else:
+        #     self.__pen.fillcolor('#f4a019')

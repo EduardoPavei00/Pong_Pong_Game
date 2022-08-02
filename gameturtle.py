@@ -4,7 +4,8 @@ from level_number import Level
 import turtle as t
 from time import sleep
 
-from screen_win import fim
+from models import Ball
+from screen_draw import end
 
 
 class PaddleGame:
@@ -13,8 +14,6 @@ class PaddleGame:
     active: bool
     level = 1
     state = False
-
-    # TODO maybe game has an end?
 
     def __init__(self):
         self.__pen = t.Turtle()
@@ -47,6 +46,7 @@ class PaddleGame:
             if self.state is True:
                 self.sc.clearscreen()
                 break
+                ####LEVEL 1
         self.transition("Level :{}".format(self.level))
         position_x = [-150, -75, 0, 75, 150, -150, -75, 0, 75, 150]
         position_y = [150, 150, 150, 150, 150, 200, 200, 200, 200, 200]
@@ -58,6 +58,7 @@ class PaddleGame:
                 self.level += 1
                 print("------>", self.level)
                 break
+                ####LEVEL 2
         self.transition("Level :{}".format(self.level))
         position_x = [-150, -75, 0, 75, 150, -150, -75, 0, 75, 150]
         position_y = [150, 150, 150, 150, 150, 200, 200, 200, 200, 200]
@@ -69,8 +70,32 @@ class PaddleGame:
                 self.level += 1
                 print("------>", self.level)
                 break
-
-        fim()
+                ####LEVEL 3
+        self.transition("Level :{}".format(self.level))
+        position_x = [-150, -75, 0, 75, 150, -150, -75, 0, 75, 150, -150, -75, 0, 75, 150]
+        position_y = [150, 150, 150, 150, 150, 200, 200, 200, 200, 200, 100, 100, 100, 100, 100]
+        level_3 = Level(3, position_x, position_y, 5, 6)
+        self.placar()
+        while True:
+            level_3.update()
+            if len(level_3.enemies) == 0:
+                self.level += 1
+                print("------>", self.level)
+                break
+                ####LEVEL 4
+        self.transition("Level Bonus")
+        position_x = [0, -75, 0, 75, -150, -75, 0, 75, 150, -75, 0, 75, 0]
+        position_y = [210, 180, 180, 180, 150, 150, 150, 150, 150, 120, 120, 120, 90]
+        level_4 = Level(4, position_x, position_y, 5, 6)
+        self.placar()
+        while True:
+            level_4.update()
+            if len(level_4.enemies) == 0:
+                self.level += 1
+                print("------>", self.level)
+                break
+                ###WIN
+        end()
         sleep(3)
         self.sc.bye()
 
